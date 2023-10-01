@@ -9,7 +9,11 @@ var navigationItems = [
         href: "https://github.com/MrSvch0st/Malware",
         icon: "fab fa-windows",
     },
- 
+    {
+        name: "NedoHackers",
+        href: "https://mrsvch0st.github.io/nedohackers",
+        icon: "fa fa-exclamation-triangle",
+    },
                       ]
 
 
