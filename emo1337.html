@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .form-container {
+            width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container" id="loginFormContainer">
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="return validateLoginForm()">
+        <label for="loginUsername">Username:</label>
+        <input type="text" id="loginUsername" name="loginUsername" required>
+
+        <label for="loginPassword">Password:</label>
+        <input type="password" id="loginPassword" name="loginPassword" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register here</a>.</p>
+</div>
+
+<div class="form-container" id="registerFormContainer" style="display: none;">
+    <h2>Register</h2>
+    <form id="registerForm" onsubmit="return validateRegisterForm()">
+        <label for="registerUsername">Username:</label>
+        <input type="text" id="registerUsername" name="registerUsername" required>
+
+        <label for="registerPassword">Password:</label>
+        <input type="password" id="registerPassword" name="registerPassword" required>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p>Already have an account? <a href="#" onclick="showLoginForm()">Login here</a>.</p>
+</div>
+
+<script>
+    function showRegisterForm() {
+        document.getElementById('loginFormContainer').style.display = 'none';
+        document.getElementById('registerFormContainer').style.display = 'block';
+    }
+
+    function showLoginForm() {
+        document.getElementById('registerFormContainer').style.display = 'none';
+        document.getElementById('loginFormContainer').style.display = 'block';
+    }
+
+    function validateLoginForm() {
+        var username = document.getElementById('loginUsername').value;
+        var password = document.getElementById('loginPassword').value;
+
+
+        if (username === 'admin' && password === 'admin123') {
+            alert('Login successful!');
+            window.location.href = "/whaaaaaaaaaat";
+            return false;
+        } else {
+            alert('Invalid username or password. Please try again.');
+            return false;
+        }
+    }
+
+    function validateRegisterForm() {
+        var username = document.getElementById('registerUsername').value;
+        var password = document.getElementById('registerPassword').value;
+
+
+        alert('Registration successful!');
+        showLoginForm(); 
+        return false; 
+    }
+</script>
+
+</body>
+</html>
