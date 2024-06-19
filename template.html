@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin</title>
+	<style>
+		tr:target td.key{
+			background-color: yellow;
+		}
+
+		td.red{
+			background-color: rgba(250, 0, 0, 0.3);
+		}
+
+		td.green{
+			background-color: rgba(0, 250, 0, 0.2)
+		}
+
+		td input{
+			background-color: transparent; 
+			border:none;
+		}
+	</style>
+</head>
+<body>
+	<h3>Добавление нового ключа</h3>
+	<form action='?action=addKey' method='POST'>
+		<p><strong>Ключ: </strong><input type='text' name='key' maxlength="19" value='<?=implode('-',str_split(substr(strtoupper(md5(uniqid())),0,16), 4))?>'/></p>
+		<p><strong>Действителен до: </strong><input type='date' name='expires' data-date="" data-date-format="YYYY-MM-DD" value="<?=date('Y-m-d')?>"/></p>
+		<p><strong>Количество активаций: </strong><input type='number' name='num' value='1'/></p>
+		<button>Сохранить ключ</button>
+	</form>
+
+	<h3>Список ключей</h3>
+	<table border="1px" cellpadding="5px">
+		<thead>
+			<th>Ключ</th>
+			<th>Действителен до</th>
+			<th>Осталось активаций</th>
+			<th>Действия</th>
+		</thead>
+		<tbody>
+			<?foreach($keys as $key){
+				$ts = DateTime::createFromFormat('Y-m-d h:s:i', $key['expires'])->format('U');
+				$isExp = $ts > time();
+				$days = floor(($ts - time()) / (24 * 60 * 60));
+				?>
+				<tr id='key<?=$key['id']?>'>
+					<form action='?action=editKey' method='POST' id='editNum_<?=$key['id']?>'>
+					<input type='hidden' name='id' value='<?=$key['id']?>'>
+
+						<td class='key'><?=$key['key']?></td>
+						<td class="<?=$isExp ? 'green' : 'red'?>">
+							<input type='text' name='expires' value='<?=$key['expires']?>'>
+							<?=$isExp ? '<br/><i style="font-size:11px">(Осталось дней: '.$days.')</i>' : ''?>	
+						</td>
+						<td class="<?=($key['num'] > 0)? 'green' : 'red'?>">
+							<input type='number' name='num' value='<?=$key['num']?>'>
+						</td>
+						<td>
+							<button>Сохранить</button>
+							<button onclick="editNum_<?=$key['id']?>.action='?action=deleteKey'">Удалить</button>
+						</td>
+
+					</form>
+				</tr>
+				<?
+			}?>
+		</tbody>
+	</table>
+</body>
+</html>
